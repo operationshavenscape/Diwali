@@ -1353,6 +1353,12 @@
       // Special stage triggers
       if (idx === 3) {
         startAmbientFireworks();
+        if (isRecipientMode) {
+          setTimeout(() => {
+            const rect = env.getBoundingClientRect();
+            boom(rect.left + rect.width / 2, rect.top, true);
+          }, 300);
+        }
       }
     }
 
@@ -1572,8 +1578,15 @@
     // Share Button Handler (Clipboard copy with fallback)
     $('shr').addEventListener('click', () => {
       initAudio();
-      const toVal = encodeURIComponent($('to-in').value.trim() || 'Kashish');
-      const frVal = encodeURIComponent($('fr-in').value.trim() || 'Shivam');
+      let toVal, frVal;
+      const urlParams = new URLSearchParams(window.location.search);
+      if (isRecipientMode) {
+        toVal = urlParams.get('to') || encodeURIComponent('Friend');
+        frVal = urlParams.get('from') || encodeURIComponent('Well-wisher');
+      } else {
+        toVal = encodeURIComponent($('to-in').value.trim() || 'Kashish');
+        frVal = encodeURIComponent($('fr-in').value.trim() || 'Shivam');
+      }
       const shareUrl = `${window.location.origin}${window.location.pathname}?to=${toVal}&from=${frVal}`;
 
       if (navigator.share) {
@@ -1639,22 +1652,44 @@
     });
 
     // Check URL parameters for customized greetings
+    let isRecipientMode = false;
+
     window.addEventListener('DOMContentLoaded', () => {
       try {
         const urlParams = new URLSearchParams(window.location.search);
-        const toParam = urlParams.get('to');
-        const fromParam = urlParams.get('from');
+        let toParam = urlParams.get('to');
+        let fromParam = urlParams.get('from');
 
-        if (toParam) {
-          $('to-in').value = decodeURIComponent(toParam);
-          $('to').textContent = `${decodeURIComponent(toParam)}, शुभ दीपावली`;
-        }
-        if (fromParam) {
-          $('fr-in').value = decodeURIComponent(fromParam);
-          $('by').textContent = `- ${decodeURIComponent(fromParam)}`;
+        // Also check hash parameters as fallback (e.g. #to=...&from=...)
+        if (!toParam && window.location.hash) {
+          const hashParams = new URLSearchParams(window.location.hash.substring(1));
+          toParam = hashParams.get('to');
+          fromParam = hashParams.get('from');
         }
 
-        // If direct recipient link, we can let user start or jump
+        if (toParam || fromParam) {
+          isRecipientMode = true;
+          const toName = toParam ? decodeURIComponent(toParam) : 'Dear One';
+          const fromName = fromParam ? decodeURIComponent(fromParam) : 'Shivam';
+
+          $('to').textContent = `${toName}, शुभ दीपावली`;
+          $('by').textContent = `- ${fromName}`;
+
+          // Directly show the letter at the last page without any name-changing inputs
+          c1.style.display = 'none';
+          c1.classList.remove('active');
+          c2.classList.add('active');
+
+          // Open envelope and display the secret letter scroll directly
+          env.classList.add('opened');
+          scr.classList.add('show');
+
+          // Remove the part to change names (the 'Make Mine' button)
+          const rstBtn = $('rst');
+          if (rstBtn) {
+            rstBtn.style.display = 'none';
+          }
+        }
       } catch (e) {
         console.warn('URL parsing error:', e);
       }
