@@ -1107,7 +1107,7 @@
           <button class="btn" id="rst">Make Mine ✨</button>
         </div>
 
-        <p class="cr">Made with ❤️ by Storymint Studio - @storymint.studio</p>
+        <p class="cr">Made with ❤️ by YogiStack Innovations</p>
       </div>
     </div>
   </section>
@@ -1447,15 +1447,37 @@
         // Explode at peak
         setTimeout(() => {
           clearInterval(trailInterval);
-          boom(W / 2, H * 0.22, true);
-          setTimeout(() => {
-            boom(W / 2 - 80, H * 0.28, false);
-            boom(W / 2 + 80, H * 0.28, false);
-          }, 180);
+          $('h3').textContent = "✨ Happy Diwali! ✨";
+
+          // Grand barrage of firecrackers exploding on top
+          boom(W / 2, H * 0.20, true);
 
           setTimeout(() => {
+            boom(W / 2 - 130, H * 0.24, true);
+          }, 220);
+
+          setTimeout(() => {
+            boom(W / 2 + 130, H * 0.22, true);
+          }, 460);
+
+          setTimeout(() => {
+            boom(W / 2 - 65, H * 0.16, false);
+            boom(W / 2 + 70, H * 0.17, false);
+          }, 750);
+
+          setTimeout(() => {
+            boom(W / 2, H * 0.25, true);
+          }, 1100);
+
+          setTimeout(() => {
+            boom(W / 2 - 150, H * 0.21, false);
+            boom(W / 2 + 150, H * 0.21, false);
+          }, 1500);
+
+          // After full fireworks show on top, smoothly shift to the wish card stage
+          setTimeout(() => {
             goToStage(3);
-          }, 700);
+          }, 2400);
         }, 950);
       }, 450);
     }
