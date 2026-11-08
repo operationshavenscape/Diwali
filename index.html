@@ -21,6 +21,29 @@
       --gold-light: #ffe58f;
       --gold-dark: #b8860b;
       --crimson-deep: #800000;
+ <!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Diwali - Animated Wish</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Great+Vibes&family=Marcellus&family=Poppins:wght@300;400;500;600;700&family=Rozha+One&family=Yatra+One&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    :root {
+      --gold-primary: #ffc83d;
+      --gold-light: #ffe58f;
+      --gold-dark: #b8860b;
+      --crimson-deep: #800000;
       --crimson-glow: #b31217;
       --amber-glow: #ff7a1f;
       --bg-dark: #0d0216;
@@ -775,272 +798,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    .sky-lantern {
-      position: absolute;
-      bottom: -100px;
-      width: 50px;
-      height: 70px;
-      background: radial-gradient(ellipse at center, #fff3b0 10%, #ffa000 60%, #e65100 100%);
-      border-radius: 18px 18px 25px 25px / 20px 20px 10px 10px;
-      box-shadow: 0 0 25px #ffa000, 0 0 50px rgba(255, 160, 0, 0.6);
-      animation: floatLantern 14s linear forwards;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 4px;
-    }
-
-    .sky-lantern::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      width: 14px;
-      height: 6px;
-      background: #ffe082;
-      border-radius: 3px;
-      box-shadow: 0 0 8px #fff;
-    }
-
-    .lantern-wish-text {
-      font-size: 0.55rem;
-      color: #4e1a00;
-      font-weight: 700;
-      text-align: center;
-      max-width: 44px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    /* Toast Notification */
-    #toast {
-      position: fixed;
-      top: 24px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100px);
-      background: rgba(28, 12, 44, 0.92);
-      border: 1px solid #ffc83d;
-      color: #fff9db;
-      padding: 10px 22px;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 200, 61, 0.4);
-      z-index: 1000;
-      pointer-events: none;
-      opacity: 0;
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
-    }
-
-    #toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
-    /* Animations */
-    @keyframes floatSlow {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    @keyframes badgePulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 200, 61, 0.4); }
-      50% { transform: scale(1.04); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 200, 61, 0.7); }
-    }
-
-    @keyframes shine {
-      0% { transform: translateX(-150%) rotate(30deg); }
-      30%, 100% { transform: translateX(150%) rotate(30deg); }
-    }
-
-    @keyframes flameFlicker {
-      0% { transform: translateX(-50%) scale(1) rotate(-1deg); }
-      25% { transform: translateX(-50%) scale(1.05, 0.95) rotate(1.5deg); }
-      50% { transform: translateX(-50%) scale(0.95, 1.05) rotate(-2deg); }
-      75% { transform: translateX(-50%) scale(1.03, 0.98) rotate(1deg); }
-      100% { transform: translateX(-50%) scale(0.98, 1.02) rotate(-1deg); }
-    }
-
-    @keyframes haloPulse {
-      0% { transform: translateX(-50%) scale(0.95); opacity: 0.7; }
-      100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
-    }
-
-    @keyframes pulseHint {
-      0%, 100% { opacity: 0.6; transform: scale(0.98); }
-      50% { opacity: 1; transform: scale(1.02); }
-    }
-
-    @keyframes illuminateGlow {
-      0% {
-        text-shadow: 
-          0 0 6px #ffb300,
-          0 0 14px #ff8f00,
-          0 0 22px rgba(255, 111, 0, 0.6);
-        box-shadow: 0 0 18px rgba(255, 183, 3, 0.25), inset 0 0 10px rgba(255, 200, 61, 0.15);
-        opacity: 0.88;
-      }
-      100% {
-        text-shadow: 
-          0 0 10px #ffe082,
-          0 0 22px #ffb300,
-          0 0 34px #ff8f00,
-          0 0 52px rgba(255, 111, 0, 0.95);
-        box-shadow: 0 0 35px rgba(255, 183, 3, 0.5), inset 0 0 18px rgba(255, 200, 61, 0.3);
-        opacity: 1;
-      }
-    }
-
-    @keyframes sparkFlicker {
-      0% { transform: scale(0.8); opacity: 0.7; }
-      100% { transform: scale(1.4); opacity: 1; filter: drop-shadow(0 0 6px #fff); }
-    }
-
-    @keyframes rocketAscend {
-      0% { transform: translateX(-50%) translateY(0); }
-      20% { transform: translateX(-52%) translateY(-10px); }
-      40% { transform: translateX(-48%) translateY(-60px); }
-      70% { transform: translateX(-50%) translateY(-260px); }
-      100% { transform: translateX(-50%) translateY(-900px); opacity: 0; }
-    }
-
-    @keyframes rotateRangoli {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes floatLantern {
-      0% {
-        transform: translateY(0) translateX(0) scale(0.6);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-        transform: translateY(-80px) translateX(15px) scale(0.85);
-      }
-      50% {
-        transform: translateY(-45vh) translateX(-25px) scale(0.9);
-      }
-      80% {
-        transform: translateY(-80vh) translateX(20px) scale(0.65);
-      }
-      100% {
-        transform: translateY(-115vh) translateX(-10px) scale(0.4);
-        opacity: 0.2;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Background Fireworks Canvas -->
-  <canvas id="c"></canvas>
-
-  <!-- Sound Toggle Button -->
-  <button class="mute" id="mt" title="Toggle Sound">🔊</button>
-
-
-
-  <!-- Sky Lanterns Container -->
-  <div id="lanterns-container"></div>
-
-  <!-- In-Page Toast Notification -->
-  <div id="toast"></div>
-
-  <!-- =========================================================
-       STAGE 0: DOORS & WELCOME SCREEN
-       ========================================================= -->
-  <section class="stage on" id="s0">
-    <div class="door-container" id="door-wrap">
-      <div class="door door-l"><div class="door-handle"></div></div>
-      <div class="door door-r"><div class="door-handle"></div></div>
-    </div>
-    <div class="s0-content">
-      <h1 class="shubh-title">शुभ दीपावली</h1>
-      <div class="badge-jgm">
-        <span class="badge-text">जगमग दिवाली</span>
-      </div>
-      <button class="btn btn-gold" id="btn-begin">Tap to begin ✨</button>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       STAGE 1: SACRED DIYA SHRINE
-       ========================================================= -->
-  <section class="stage" id="s1">
-    <div class="shrine-container">
-      <!-- Traditional Rajput Jharokha Arch SVG -->
-      <svg class="jharokha-frame" viewBox="0 0 320 440" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Outer Glowing Arch -->
-        <path d="M20 420V150C20 70 80 20 160 20C240 20 300 70 300 150V420" stroke="#ffc83d" stroke-width="4" stroke-linecap="round"/>
-        <!-- Inner Scalloped Foil Arch -->
-        <path d="M40 420V170C40 140 55 125 70 120C85 115 105 100 110 85C115 70 135 60 160 45C185 60 205 70 210 85C215 100 235 115 250 120C265 125 280 140 280 170V420" stroke="#ffe58f" stroke-width="2.5" fill="rgba(255, 200, 61, 0.05)"/>
-        <!-- Archway Floral Toran Garlands -->
-        <circle cx="160" cy="45" r="7" fill="#ffc83d"/>
-        <circle cx="110" cy="85" r="5" fill="#ff9100"/>
-        <circle cx="210" cy="85" r="5" fill="#ff9100"/>
-        <circle cx="70" cy="120" r="5" fill="#ff9100"/>
-        <circle cx="250" cy="120" r="5" fill="#ff9100"/>
-        <!-- Decorative Arch Crown Finial -->
-        <path d="M160 8L165 20H155L160 8Z" fill="#ffd700"/>
-        <circle cx="160" cy="6" r="3" fill="#ffe082"/>
-        <!-- Pedestal Base -->
-        <rect x="30" y="405" width="260" height="20" rx="6" fill="#4a1500" stroke="#ffc83d" stroke-width="2"/>
-        <line x1="50" y1="415" x2="270" y2="415" stroke="#ffe58f" stroke-width="1.5" stroke-dasharray="4 4"/>
-      </svg>
-
-      <!-- Diya and Flame Altar -->
-      <div class="diya-altar" id="diya-altar">
-        <div class="diya-halo" id="diya-halo"></div>
-        <div class="diya-flame" id="diya-flame">
-          <div class="flame-outer"></div>
-          <div class="flame-inner"></div>
-        </div>
-        <!-- Earthen Clay Diya SVG -->
-        <svg class="clay-diya" viewBox="0 0 140 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Diya Base / Clay Bowl -->
-          <ellipse cx="70" cy="55" rx="55" ry="20" fill="url(#clayGrad)"/>
-          <path d="M15 52C25 72 115 72 125 52C130 40 10 40 15 52Z" fill="url(#clayDark)"/>
-          <!-- Inner Ghee / Oil Pool -->
-          <ellipse cx="70" cy="46" rx="42" ry="12" fill="url(#oilGrad)"/>
-          <!-- Ornate Golden Rim Carvings -->
-          <path d="M22 47Q70 62 118 47" stroke="#ffc83d" stroke-width="2"/>
-          <circle cx="70" cy="55" r="3.5" fill="#ffe58f"/>
-          <circle cx="50" cy="53" r="2.5" fill="#ffe58f"/>
-          <circle cx="90" cy="53" r="2.5" fill="#ffe58f"/>
-          <!-- Cotton Wick -->
-          <path d="M70 46Q70 34 70 28" stroke="#422518" stroke-width="3" stroke-linecap="round"/>
-          <defs>
-            <linearGradient id="clayGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#a04000"/>
-              <stop offset="50%" stop-color="#782800"/>
-              <stop offset="100%" stop-color="#4e1a00"/>
-            </linearGradient>
-            <linearGradient id="clayDark" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#873600"/>
-              <stop offset="100%" stop-color="#3e1400"/>
-            </linearGradient>
-            <linearGradient id="oilGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#e67e22"/>
-              <stop offset="50%" stop-color="#f39c12"/>
-              <stop offset="100%" stop-color="#d35400"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-
-      <div class="hint-text" id="h1">Tap the diya to light it 🪔</div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       STAGE 2: FIRECRACKER SKY ROCKET
-       ========================================================= */
+      pointer-events: n=========================================== */
   -->
   <section class="stage" id="s2">
     <div class="hint2" id="h3">Double tap to light it 🚀</div>
