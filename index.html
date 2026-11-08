@@ -775,438 +775,272 @@
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: n     position: absolute;
-      top: -60px;
-      left: 50%;
-      transform: translateX(-50%) scale(0);
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle, rgba(255, 183, 3, 0.45) 0%, rgba(255, 107, 0, 0.2) 40%, transparent 70%);
-      border-radius: 50%;
-      opacity: 0;
-      transition: all 0.8s ease;
       pointer-events: none;
-      z-index: 10;
+      z-index: 5;
     }
 
-    .diya-halo.lit {
-      opacity: 1;
-      transform: translateX(-50%) scale(1);
-      animation: haloPulse 2s ease-in-out infinite alternate;
-    }
-
-    .hint-text {
+    .sky-lantern {
       position: absolute;
-      bottom: -65px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.05rem;
-      font-weight: 600;
-      letter-spacing: 0.8px;
-      color: #fff9db;
+      bottom: -100px;
+      width: 50px;
+      height: 70px;
+      background: radial-gradient(ellipse at center, #fff3b0 10%, #ffa000 60%, #e65100 100%);
+      border-radius: 18px 18px 25px 25px / 20px 20px 10px 10px;
+      box-shadow: 0 0 25px #ffa000, 0 0 50px rgba(255, 160, 0, 0.6);
+      animation: floatLantern 14s linear forwards;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .sky-lantern::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      width: 14px;
+      height: 6px;
+      background: #ffe082;
+      border-radius: 3px;
+      box-shadow: 0 0 8px #fff;
+    }
+
+    .lantern-wish-text {
+      font-size: 0.55rem;
+      color: #4e1a00;
+      font-weight: 700;
       text-align: center;
-      width: max-content;
-      max-width: 92%;
-      z-index: 25;
-      padding: 10px 26px;
-      border-radius: 30px;
-      background: radial-gradient(ellipse at center, rgba(255, 179, 0, 0.3) 0%, rgba(255, 107, 0, 0.1) 60%, transparent 80%);
-      box-shadow: 0 0 25px rgba(255, 183, 3, 0.35), inset 0 0 15px rgba(255, 200, 61, 0.2);
-      border: 1.5px solid rgba(255, 200, 61, 0.45);
-      backdrop-filter: blur(6px);
-      text-shadow: 
-        0 0 8px #ffb300,
-        0 0 16px #ff8f00,
-        0 0 26px #ff6f00,
-        0 0 40px rgba(255, 111, 0, 0.85);
-      animation: illuminateGlow 2.5s ease-in-out infinite alternate;
-      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      max-width: 44px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    .hint-text.lit {
-      color: #ffffff;
-      border-color: rgba(255, 235, 150, 0.8);
-      background: radial-gradient(ellipse at center, rgba(255, 200, 61, 0.45) 0%, rgba(255, 140, 0, 0.2) 60%, transparent 85%);
-      box-shadow: 0 0 40px rgba(255, 200, 61, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.3);
-      text-shadow: 
-        0 0 10px #ffffff,
-        0 0 20px #ffca28,
-        0 0 35px #ff9800,
-        0 0 60px #ff6f00;
-      transform: translateX(-50%) scale(1.05);
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: rgba(28, 12, 44, 0.92);
+      border: 1px solid #ffc83d;
+      color: #fff9db;
+      padding: 10px 22px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 200, 61, 0.4);
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
     }
 
-    /* =========================================================
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Animations */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes badgePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 200, 61, 0.4); }
+      50% { transform: scale(1.04); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 200, 61, 0.7); }
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-150%) rotate(30deg); }
+      30%, 100% { transform: translateX(150%) rotate(30deg); }
+    }
+
+    @keyframes flameFlicker {
+      0% { transform: translateX(-50%) scale(1) rotate(-1deg); }
+      25% { transform: translateX(-50%) scale(1.05, 0.95) rotate(1.5deg); }
+      50% { transform: translateX(-50%) scale(0.95, 1.05) rotate(-2deg); }
+      75% { transform: translateX(-50%) scale(1.03, 0.98) rotate(1deg); }
+      100% { transform: translateX(-50%) scale(0.98, 1.02) rotate(-1deg); }
+    }
+
+    @keyframes haloPulse {
+      0% { transform: translateX(-50%) scale(0.95); opacity: 0.7; }
+      100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+    }
+
+    @keyframes pulseHint {
+      0%, 100% { opacity: 0.6; transform: scale(0.98); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+
+    @keyframes illuminateGlow {
+      0% {
+        text-shadow: 
+          0 0 6px #ffb300,
+          0 0 14px #ff8f00,
+          0 0 22px rgba(255, 111, 0, 0.6);
+        box-shadow: 0 0 18px rgba(255, 183, 3, 0.25), inset 0 0 10px rgba(255, 200, 61, 0.15);
+        opacity: 0.88;
+      }
+      100% {
+        text-shadow: 
+          0 0 10px #ffe082,
+          0 0 22px #ffb300,
+          0 0 34px #ff8f00,
+          0 0 52px rgba(255, 111, 0, 0.95);
+        box-shadow: 0 0 35px rgba(255, 183, 3, 0.5), inset 0 0 18px rgba(255, 200, 61, 0.3);
+        opacity: 1;
+      }
+    }
+
+    @keyframes sparkFlicker {
+      0% { transform: scale(0.8); opacity: 0.7; }
+      100% { transform: scale(1.4); opacity: 1; filter: drop-shadow(0 0 6px #fff); }
+    }
+
+    @keyframes rocketAscend {
+      0% { transform: translateX(-50%) translateY(0); }
+      20% { transform: translateX(-52%) translateY(-10px); }
+      40% { transform: translateX(-48%) translateY(-60px); }
+      70% { transform: translateX(-50%) translateY(-260px); }
+      100% { transform: translateX(-50%) translateY(-900px); opacity: 0; }
+    }
+
+    @keyframes rotateRangoli {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes floatLantern {
+      0% {
+        transform: translateY(0) translateX(0) scale(0.6);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+        transform: translateY(-80px) translateX(15px) scale(0.85);
+      }
+      50% {
+        transform: translateY(-45vh) translateX(-25px) scale(0.9);
+      }
+      80% {
+        transform: translateY(-80vh) translateX(20px) scale(0.65);
+      }
+      100% {
+        transform: translateY(-115vh) translateX(-10px) scale(0.4);
+        opacity: 0.2;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Fireworks Canvas -->
+  <canvas id="c"></canvas>
+
+  <!-- Sound Toggle Button -->
+  <button class="mute" id="mt" title="Toggle Sound">🔊</button>
+
+
+
+  <!-- Sky Lanterns Container -->
+  <div id="lanterns-container"></div>
+
+  <!-- In-Page Toast Notification -->
+  <div id="toast"></div>
+
+  <!-- =========================================================
+       STAGE 0: DOORS & WELCOME SCREEN
+       ========================================================= -->
+  <section class="stage on" id="s0">
+    <div class="door-container" id="door-wrap">
+      <div class="door door-l"><div class="door-handle"></div></div>
+      <div class="door door-r"><div class="door-handle"></div></div>
+    </div>
+    <div class="s0-content">
+      <h1 class="shubh-title">शुभ दीपावली</h1>
+      <div class="badge-jgm">
+        <span class="badge-text">जगमग दिवाली</span>
+      </div>
+      <button class="btn btn-gold" id="btn-begin">Tap to begin ✨</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       STAGE 1: SACRED DIYA SHRINE
+       ========================================================= -->
+  <section class="stage" id="s1">
+    <div class="shrine-container">
+      <!-- Traditional Rajput Jharokha Arch SVG -->
+      <svg class="jharokha-frame" viewBox="0 0 320 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer Glowing Arch -->
+        <path d="M20 420V150C20 70 80 20 160 20C240 20 300 70 300 150V420" stroke="#ffc83d" stroke-width="4" stroke-linecap="round"/>
+        <!-- Inner Scalloped Foil Arch -->
+        <path d="M40 420V170C40 140 55 125 70 120C85 115 105 100 110 85C115 70 135 60 160 45C185 60 205 70 210 85C215 100 235 115 250 120C265 125 280 140 280 170V420" stroke="#ffe58f" stroke-width="2.5" fill="rgba(255, 200, 61, 0.05)"/>
+        <!-- Archway Floral Toran Garlands -->
+        <circle cx="160" cy="45" r="7" fill="#ffc83d"/>
+        <circle cx="110" cy="85" r="5" fill="#ff9100"/>
+        <circle cx="210" cy="85" r="5" fill="#ff9100"/>
+        <circle cx="70" cy="120" r="5" fill="#ff9100"/>
+        <circle cx="250" cy="120" r="5" fill="#ff9100"/>
+        <!-- Decorative Arch Crown Finial -->
+        <path d="M160 8L165 20H155L160 8Z" fill="#ffd700"/>
+        <circle cx="160" cy="6" r="3" fill="#ffe082"/>
+        <!-- Pedestal Base -->
+        <rect x="30" y="405" width="260" height="20" rx="6" fill="#4a1500" stroke="#ffc83d" stroke-width="2"/>
+        <line x1="50" y1="415" x2="270" y2="415" stroke="#ffe58f" stroke-width="1.5" stroke-dasharray="4 4"/>
+      </svg>
+
+      <!-- Diya and Flame Altar -->
+      <div class="diya-altar" id="diya-altar">
+        <div class="diya-halo" id="diya-halo"></div>
+        <div class="diya-flame" id="diya-flame">
+          <div class="flame-outer"></div>
+          <div class="flame-inner"></div>
+        </div>
+        <!-- Earthen Clay Diya SVG -->
+        <svg class="clay-diya" viewBox="0 0 140 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Diya Base / Clay Bowl -->
+          <ellipse cx="70" cy="55" rx="55" ry="20" fill="url(#clayGrad)"/>
+          <path d="M15 52C25 72 115 72 125 52C130 40 10 40 15 52Z" fill="url(#clayDark)"/>
+          <!-- Inner Ghee / Oil Pool -->
+          <ellipse cx="70" cy="46" rx="42" ry="12" fill="url(#oilGrad)"/>
+          <!-- Ornate Golden Rim Carvings -->
+          <path d="M22 47Q70 62 118 47" stroke="#ffc83d" stroke-width="2"/>
+          <circle cx="70" cy="55" r="3.5" fill="#ffe58f"/>
+          <circle cx="50" cy="53" r="2.5" fill="#ffe58f"/>
+          <circle cx="90" cy="53" r="2.5" fill="#ffe58f"/>
+          <!-- Cotton Wick -->
+          <path d="M70 46Q70 34 70 28" stroke="#422518" stroke-width="3" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="clayGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#a04000"/>
+              <stop offset="50%" stop-color="#782800"/>
+              <stop offset="100%" stop-color="#4e1a00"/>
+            </linearGradient>
+            <linearGradient id="clayDark" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#873600"/>
+              <stop offset="100%" stop-color="#3e1400"/>
+            </linearGradient>
+            <linearGradient id="oilGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#e67e22"/>
+              <stop offset="50%" stop-color="#f39c12"/>
+              <stop offset="100%" stop-color="#d35400"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="hint-text" id="h1">Tap the diya to light it 🪔</div>
+    </div>
+  </section>
+
+  <!-- =========================================================
        STAGE 2: FIRECRACKER SKY ROCKET
        ========================================================= */
-    #s2 {
-      background: radial-gradient(ellipse at bottom, #1d0738 0%, #0d0216 70%, #05000a 100%);
-    }
-
-    .hint2 {
-      position: absolute;
-      top: 32%;
-      font-size: 1.25rem;
-      color: #ffe082;
-      font-weight: 500;
-      letter-spacing: 1px;
-      text-shadow: 0 0 15px rgba(255, 193, 7, 0.7);
-      animation: pulseHint 1.8s infinite;
-      text-align: center;
-      width: 100%;
-      z-index: 20;
-    }
-
-    #rocket {
-      position: absolute;
-      bottom: 120px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px;
-      height: 180px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-      z-index: 30;
-      transition: transform 0.1s linear;
-    }
-
-    #rocket .cone {
-      width: 0;
-      height: 0;
-      border-left: 18px solid transparent;
-      border-right: 18px solid transparent;
-      border-bottom: 34px solid #d32f2f;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-    }
-
-    #rocket .tube {
-      width: 28px;
-      height: 80px;
-      background: repeating-linear-gradient(
-        45deg,
-        #f57c00,
-        #f57c00 10px,
-        #ffd54f 10px,
-        #ffd54f 20px,
-        #d32f2f 20px,
-        #d32f2f 30px
-      );
-      border-radius: 3px;
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6), 0 4px 10px rgba(0, 0, 0, 0.5);
-      border: 1px solid #ffd54f;
-    }
-
-    #rocket .stick {
-      width: 4px;
-      height: 100px;
-      background: #8d6e63;
-      margin-top: -5px;
-      border-radius: 1px;
-    }
-
-    #rocket .fuse {
-      position: absolute;
-      bottom: 70px;
-      left: 20px;
-      width: 16px;
-      height: 16px;
-      border-right: 2px dashed #4e342e;
-      border-bottom: 2px dashed #4e342e;
-      border-radius: 0 0 10px 0;
-    }
-
-    #rocket .spark {
-      position: absolute;
-      bottom: 66px;
-      left: 32px;
-      width: 8px;
-      height: 8px;
-      background: #ffeb3b;
-      border-radius: 50%;
-      box-shadow: 0 0 10px #ff9800, 0 0 20px #ffeb3b;
-      opacity: 0;
-    }
-
-    #rocket.ignited .spark {
-      opacity: 1;
-      animation: sparkFlicker 0.1s infinite alternate;
-    }
-
-    #rocket.launching {
-      animation: rocketAscend 1.1s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
-    }
-
-    /* =========================================================
-       STAGE 3: MAIN GREETING CARD & FIREWORKS
-       ========================================================= */
-    #s3 {
-      background: transparent;
-      pointer-events: none;
-    }
-
-    .card-wrap {
-      width: 90%;
-      max-width: 420px;
-      max-height: 88vh;
-      overflow-y: auto;
-      background: rgba(28, 12, 44, 0.88);
-      border: 1.5px solid rgba(255, 200, 61, 0.45);
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 179, 0, 0.25);
-      backdrop-filter: blur(12px);
-      padding: 24px 20px;
-      text-align: center;
-      position: relative;
-      z-index: 50;
-      pointer-events: auto;
-      scrollbar-width: none;
-      transition: all 0.4s ease;
-    }
-
-    .card-wrap::-webkit-scrollbar { display: none; }
-
-    .card {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .card.active {
-      display: flex;
-    }
-
-    /* Card 1: Creator Form */
-    #c1 h2 {
-      font-family: 'Rozha One', 'Yatra One', serif;
-      font-size: 2.2rem;
-      background: linear-gradient(180deg, #fff9db 0%, #ffc83d 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
-    }
-
-    #c1 p {
-      font-size: 0.95rem;
-      color: #e0d0f5;
-      margin-bottom: 18px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px 16px;
-      margin-bottom: 14px;
-      border-radius: 14px;
-      border: 1.5px solid rgba(255, 200, 61, 0.35);
-      background: rgba(15, 5, 25, 0.65);
-      color: #fff;
-      font-size: 0.95rem;
-      font-family: 'Poppins', sans-serif;
-      outline: none;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    input:focus {
-      border-color: #ffc83d;
-      box-shadow: 0 0 12px rgba(255, 200, 61, 0.4);
-    }
-
-    input::placeholder {
-      color: rgba(220, 200, 240, 0.5);
-    }
-
-    .row {
-      display: flex;
-      gap: 10px;
-      width: 100%;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .btn {
-      background: linear-gradient(135deg, #d84315, #f57c00);
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      border-radius: 12px;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-      box-shadow: 0 4px 15px rgba(216, 67, 21, 0.4);
-      transition: all 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(245, 124, 0, 0.6);
-    }
-
-    .btn:active {
-      transform: translateY(0);
-    }
-
-    /* Card 2: Interactive Letter & Fireworks */
-    .rg {
-      width: 76px;
-      height: 76px;
-      margin-bottom: 6px;
-      filter: drop-shadow(0 0 10px rgba(255, 200, 61, 0.6));
-      animation: rotateRangoli 25s linear infinite;
-    }
-
-    .rg path {
-      fill: none;
-      stroke: #ffc83d;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-dasharray: 1;
-      stroke-dashoffset: 0;
-    }
-
-    #to {
-      font-family: 'Rozha One', 'Yatra One', serif;
-      font-size: 1.7rem;
-      background: linear-gradient(180deg, #fff7cc 0%, #ffc83d 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 12px;
-      word-break: break-word;
-    }
-
-    /* Secret Envelope */
-    .env {
-      width: 100%;
-      height: 90px;
-      background: linear-gradient(135deg, #b71c1c, #880e4f);
-      border: 1.5px solid #ffc83d;
-      border-radius: 14px;
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.3);
-      margin-bottom: 14px;
-      transition: all 0.35s ease;
-      perspective: 600px;
-    }
-
-    .env:hover {
-      transform: scale(1.02);
-      box-shadow: 0 8px 25px rgba(255, 200, 61, 0.3);
-    }
-
-    .env .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 48px;
-      background: linear-gradient(180deg, #d32f2f, #9a0007);
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-      border-bottom: 1.5px solid #ffc83d;
-      transform-origin: top center;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 2;
-    }
-
-    .env.opened .flap {
-      transform: rotateX(180deg);
-    }
-
-    .env .seal {
-      width: 38px;
-      height: 38px;
-      background: linear-gradient(135deg, #ffca28, #f57f17);
-      border-radius: 50%;
-      border: 2px solid #fff9c4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-      z-index: 5;
-      margin-bottom: 6px;
-      transition: transform 0.3s ease;
-    }
-
-    .env.opened .seal {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .env span {
-      font-size: 0.85rem;
-      color: #fff9e6;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      z-index: 3;
-    }
-
-    /* Unrolled Secret Letter Scroll */
-    .scr {
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      width: 100%;
-      background: #fffdf5;
-      color: #3e2723;
-      border-radius: 14px;
-      border: 2px solid #e0b034;
-      padding: 0 16px;
-      margin-bottom: 0;
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
-      transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease, padding 0.5s ease, margin-bottom 0.5s ease;
-      text-align: center;
-    }
-
-    .scr.show {
-      max-height: 250px;
-      opacity: 1;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .scr #msg {
-      font-family: 'Marcellus', serif;
-      font-size: 1rem;
-      line-height: 1.55;
-      color: #4a2c00;
-      margin-bottom: 8px;
-    }
-
-    .scr #by {
-      font-family: 'Great Vibes', cursive;
-      font-size: 1.45rem;
-      color: #b71c1c;
-      font-weight: 700;
-      text-align: right;
-    }
-
-    /* Footer Attribution */
-    .cr {
-      font-size: 0.72rem;
-      color: rgba(255, 235, 175, 0.65);
-      margin-top: 14px;
-      letter-spacing: 0.3px;
-    }
-
-    /* Floating Lanterns Container */
-    #lanterns-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: n=========================================== */
   -->
   <section class="stage" id="s2">
     <div class="hint2" id="h3">Double tap to light it 🚀</div>
@@ -1270,7 +1104,7 @@
         <div class="row">
           <button class="btn" id="lan">Release lantern 🏮</button>
           <button class="btn" id="shr">Share 📤</button>
-          <button class="btn" id="rst">Make Mine ✨</button>
+          <button class="btn" id="rst">Create Your Own ✨</button>
         </div>
 
         <p class="cr">Made with ❤️ by YogiStack Innovations</p>
@@ -1792,13 +1626,23 @@
       }
     }
 
-    // Reset / Make Mine Handler
+    // 'Create Your Own' Button Handler
     $('rst').addEventListener('click', () => {
       initAudio();
+      isRecipientMode = false;
       c2.classList.remove('active');
+      c1.style.display = 'flex';
       c1.classList.add('active');
+
+      // Clear previous query parameters cleanly in URL
+      try {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } catch (e) {}
+
       $('to-in').value = '';
+      $('fr-in').value = '';
       $('to-in').focus();
+      showToast('✨ Enter names to create your customized Diwali wish!');
     });
 
     // Sound Mute Toggle Handler
@@ -1850,10 +1694,10 @@
           env.classList.add('opened');
           scr.classList.add('show');
 
-          // Remove the part to change names (the 'Make Mine' button)
+          // Keep 'Create Your Own' button visible so recipient can create their own wish too
           const rstBtn = $('rst');
           if (rstBtn) {
-            rstBtn.style.display = 'none';
+            rstBtn.style.display = 'inline-flex';
           }
         }
       } catch (e) {
