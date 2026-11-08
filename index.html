@@ -21,29 +21,6 @@
       --gold-light: #ffe58f;
       --gold-dark: #b8860b;
       --crimson-deep: #800000;
- <!DOCTYPE html>
-<html lang="hi">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Happy Diwali - Animated Wish</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Great+Vibes&family=Marcellus&family=Poppins:wght@300;400;500;600;700&family=Rozha+One&family=Yatra+One&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-
-    :root {
-      --gold-primary: #ffc83d;
-      --gold-light: #ffe58f;
-      --gold-dark: #b8860b;
-      --crimson-deep: #800000;
       --crimson-glow: #b31217;
       --amber-glow: #ff7a1f;
       --bg-dark: #0d0216;
@@ -368,6 +345,437 @@
 
     .diya-halo {
       position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(255, 183, 3, 0.45) 0%, rgba(255, 107, 0, 0.2) 40%, transparent 70%);
+      border-radius: 50%;
+      opacity: 0;
+      transition: all 0.8s ease;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .diya-halo.lit {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+      animation: haloPulse 2s ease-in-out infinite alternate;
+    }
+
+    .hint-text {
+      position: absolute;
+      bottom: -65px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      color: #fff9db;
+      text-align: center;
+      width: max-content;
+      max-width: 92%;
+      z-index: 25;
+      padding: 10px 26px;
+      border-radius: 30px;
+      background: radial-gradient(ellipse at center, rgba(255, 179, 0, 0.3) 0%, rgba(255, 107, 0, 0.1) 60%, transparent 80%);
+      box-shadow: 0 0 25px rgba(255, 183, 3, 0.35), inset 0 0 15px rgba(255, 200, 61, 0.2);
+      border: 1.5px solid rgba(255, 200, 61, 0.45);
+      backdrop-filter: blur(6px);
+      text-shadow: 
+        0 0 8px #ffb300,
+        0 0 16px #ff8f00,
+        0 0 26px #ff6f00,
+        0 0 40px rgba(255, 111, 0, 0.85);
+      animation: illuminateGlow 2.5s ease-in-out infinite alternate;
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .hint-text.lit {
+      color: #ffffff;
+      border-color: rgba(255, 235, 150, 0.8);
+      background: radial-gradient(ellipse at center, rgba(255, 200, 61, 0.45) 0%, rgba(255, 140, 0, 0.2) 60%, transparent 85%);
+      box-shadow: 0 0 40px rgba(255, 200, 61, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.3);
+      text-shadow: 
+        0 0 10px #ffffff,
+        0 0 20px #ffca28,
+        0 0 35px #ff9800,
+        0 0 60px #ff6f00;
+      transform: translateX(-50%) scale(1.05);
+    }
+
+    /* =========================================================
+       STAGE 2: FIRECRACKER SKY ROCKET
+       ========================================================= */
+    #s2 {
+      background: radial-gradient(ellipse at bottom, #1d0738 0%, #0d0216 70%, #05000a 100%);
+    }
+
+    .hint2 {
+      position: absolute;
+      top: 32%;
+      font-size: 1.25rem;
+      color: #ffe082;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(255, 193, 7, 0.7);
+      animation: pulseHint 1.8s infinite;
+      text-align: center;
+      width: 100%;
+      z-index: 20;
+    }
+
+    #rocket {
+      position: absolute;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      z-index: 30;
+      transition: transform 0.1s linear;
+    }
+
+    #rocket .cone {
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-bottom: 34px solid #d32f2f;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    #rocket .tube {
+      width: 28px;
+      height: 80px;
+      background: repeating-linear-gradient(
+        45deg,
+        #f57c00,
+        #f57c00 10px,
+        #ffd54f 10px,
+        #ffd54f 20px,
+        #d32f2f 20px,
+        #d32f2f 30px
+      );
+      border-radius: 3px;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6), 0 4px 10px rgba(0, 0, 0, 0.5);
+      border: 1px solid #ffd54f;
+    }
+
+    #rocket .stick {
+      width: 4px;
+      height: 100px;
+      background: #8d6e63;
+      margin-top: -5px;
+      border-radius: 1px;
+    }
+
+    #rocket .fuse {
+      position: absolute;
+      bottom: 70px;
+      left: 20px;
+      width: 16px;
+      height: 16px;
+      border-right: 2px dashed #4e342e;
+      border-bottom: 2px dashed #4e342e;
+      border-radius: 0 0 10px 0;
+    }
+
+    #rocket .spark {
+      position: absolute;
+      bottom: 66px;
+      left: 32px;
+      width: 8px;
+      height: 8px;
+      background: #ffeb3b;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ff9800, 0 0 20px #ffeb3b;
+      opacity: 0;
+    }
+
+    #rocket.ignited .spark {
+      opacity: 1;
+      animation: sparkFlicker 0.1s infinite alternate;
+    }
+
+    #rocket.launching {
+      animation: rocketAscend 1.1s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+    }
+
+    /* =========================================================
+       STAGE 3: MAIN GREETING CARD & FIREWORKS
+       ========================================================= */
+    #s3 {
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .card-wrap {
+      width: 90%;
+      max-width: 420px;
+      max-height: 88vh;
+      overflow-y: auto;
+      background: rgba(28, 12, 44, 0.88);
+      border: 1.5px solid rgba(255, 200, 61, 0.45);
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 179, 0, 0.25);
+      backdrop-filter: blur(12px);
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 50;
+      pointer-events: auto;
+      scrollbar-width: none;
+      transition: all 0.4s ease;
+    }
+
+    .card-wrap::-webkit-scrollbar { display: none; }
+
+    .card {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card.active {
+      display: flex;
+    }
+
+    /* Card 1: Creator Form */
+    #c1 h2 {
+      font-family: 'Rozha One', 'Yatra One', serif;
+      font-size: 2.2rem;
+      background: linear-gradient(180deg, #fff9db 0%, #ffc83d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    #c1 p {
+      font-size: 0.95rem;
+      color: #e0d0f5;
+      margin-bottom: 18px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      border: 1.5px solid rgba(255, 200, 61, 0.35);
+      background: rgba(15, 5, 25, 0.65);
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #ffc83d;
+      box-shadow: 0 0 12px rgba(255, 200, 61, 0.4);
+    }
+
+    input::placeholder {
+      color: rgba(220, 200, 240, 0.5);
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #d84315, #f57c00);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 4px 15px rgba(216, 67, 21, 0.4);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 124, 0, 0.6);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* Card 2: Interactive Letter & Fireworks */
+    .rg {
+      width: 76px;
+      height: 76px;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 0 10px rgba(255, 200, 61, 0.6));
+      animation: rotateRangoli 25s linear infinite;
+    }
+
+    .rg path {
+      fill: none;
+      stroke: #ffc83d;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 0;
+    }
+
+    #to {
+      font-family: 'Rozha One', 'Yatra One', serif;
+      font-size: 1.7rem;
+      background: linear-gradient(180deg, #fff7cc 0%, #ffc83d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+      word-break: break-word;
+    }
+
+    /* Secret Envelope */
+    .env {
+      width: 100%;
+      height: 90px;
+      background: linear-gradient(135deg, #b71c1c, #880e4f);
+      border: 1.5px solid #ffc83d;
+      border-radius: 14px;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.3);
+      margin-bottom: 14px;
+      transition: all 0.35s ease;
+      perspective: 600px;
+    }
+
+    .env:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(255, 200, 61, 0.3);
+    }
+
+    .env .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 48px;
+      background: linear-gradient(180deg, #d32f2f, #9a0007);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-bottom: 1.5px solid #ffc83d;
+      transform-origin: top center;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 2;
+    }
+
+    .env.opened .flap {
+      transform: rotateX(180deg);
+    }
+
+    .env .seal {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #ffca28, #f57f17);
+      border-radius: 50%;
+      border: 2px solid #fff9c4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      z-index: 5;
+      margin-bottom: 6px;
+      transition: transform 0.3s ease;
+    }
+
+    .env.opened .seal {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .env span {
+      font-size: 0.85rem;
+      color: #fff9e6;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      z-index: 3;
+    }
+
+    /* Unrolled Secret Letter Scroll */
+    .scr {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      width: 100%;
+      background: #fffdf5;
+      color: #3e2723;
+      border-radius: 14px;
+      border: 2px solid #e0b034;
+      padding: 0 16px;
+      margin-bottom: 0;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+      transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease, padding 0.5s ease, margin-bottom 0.5s ease;
+      text-align: center;
+    }
+
+    .scr.show {
+      max-height: 250px;
+      opacity: 1;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .scr #msg {
+      font-family: 'Marcellus', serif;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: #4a2c00;
+      margin-bottom: 8px;
+    }
+
+    .scr #by {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.45rem;
+      color: #b71c1c;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* Footer Attribution */
+    .cr {
+      font-size: 0.72rem;
+      color: rgba(255, 235, 175, 0.65);
+      margin-top: 14px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Floating Lanterns Container */
+    #lanterns-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: n     position: absolute;
       top: -60px;
       left: 50%;
       transform: translateX(-50%) scale(0);
